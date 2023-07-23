@@ -1,9 +1,9 @@
 package com.example.demo.model;
 
 public class Board {
-    int[][] grid;
+    Tile[][] grid;
 
     public Board() {
-        grid = new int[4][4];
+        grid = new Tile[4][4];
     }
 }
