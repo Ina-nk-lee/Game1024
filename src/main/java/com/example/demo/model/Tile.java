@@ -29,6 +29,6 @@ public class Tile {
 
     public void multiply() {
         this.setNum(num * 2);
-        color = color.deriveColor(0, 1.05, 1, 1);
+        this.setColor(color.deriveColor(0, 1.05, 1, 1));
     }
 }
