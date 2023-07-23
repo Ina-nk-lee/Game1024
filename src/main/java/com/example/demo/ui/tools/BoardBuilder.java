@@ -2,8 +2,7 @@ package com.example.demo.ui.tools;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -13,7 +12,7 @@ import javafx.stage.Stage;
 
 public class BoardBuilder {
     private static Stage primaryStage;
-    private static GridPane grid;
+    private static Pane root;
     private static Scene scene;
 
     /**
@@ -25,7 +24,7 @@ public class BoardBuilder {
         primaryStage = stage;
 
         buildPane();
-        scene = new Scene(grid, 300, 300);
+        scene = new Scene(root, 300, 300);
 
         primaryStage.setTitle("1024 Game");
         primaryStage.setScene(scene);
@@ -33,16 +32,7 @@ public class BoardBuilder {
     }
 
     public static void buildPane() {
-        grid = new GridPane();
-        for (int row = 0; row < 4; row++) {
-            for (int col = 0; col < 4; col++) {
-                Label label = new Label("Row " + row + ", Col " + col);
-                grid.add(label, col, row); // Add the label at (row, col)
-            }
-        }
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(10));
-        grid.setGridLinesVisible(true);
+        root = new Pane();
+        root.setPadding(new Insets(10));
     }
 }
