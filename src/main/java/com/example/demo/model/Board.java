@@ -39,15 +39,20 @@ public class Board {
     public void initGame() {
         Random random = new Random();
 
-        int randomRow = random.nextInt(SIZE);
-        int randomCol = random.nextInt(SIZE);
+        int randomRowA = random.nextInt(SIZE);
+        int randomColA = random.nextInt(SIZE);
 
-        grid[randomRow][randomCol].setNum(1);
+        grid[randomRowA][randomColA].setNum(1);
 
-        randomRow = random.nextInt(SIZE);
-        randomCol = random.nextInt(SIZE);
+        int randomRowB = random.nextInt(SIZE);
+        int randomColB = random.nextInt(SIZE);
 
-        grid[randomRow][randomCol].setNum(1);
+        while(randomRowA == randomRowB && randomColA == randomColB) {
+            randomRowB = random.nextInt(SIZE);
+            randomColB = random.nextInt(SIZE);
+        }
+
+        grid[randomRowB][randomColB].setNum(1);
     }
 
     public void pushLeft() {
@@ -88,5 +93,19 @@ public class Board {
 
     public void merge(Tile tileA, Tile tileB) {
 
+    }
+
+    /**
+     * Converts a Board grid into String.
+     */
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for(int row = 0; row < SIZE; row++) {
+            for(int col = 0; col < SIZE; col++) {
+                result.append(grid[row][col].getNum()).append(" ");
+            }
+            result.append("\n");
+        }
+        return result.toString();
     }
 }
