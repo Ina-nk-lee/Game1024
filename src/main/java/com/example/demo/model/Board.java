@@ -15,21 +15,27 @@ public class Board {
      */
     public Board() {
         grid = new Tile[SIZE][SIZE];
-        for(int row = 0; row < SIZE; row++) {
-            for(int col = 0; col < SIZE; col++) {
-                grid[row][col] = new Tile();
-            }
-        }
+        this.clearBoard();
     }
 
     /**
      * A getter for a Tile in the Board.
-     * @param row of the tile in the Board.
-     * @param col of the tile in the Board.
+     * @param row of the tile in the Board. 0 is the first row.
+     * @param col of the tile in the Board. 0 is the first column.
      * @return a Tile with the given row and column.
      */
-    public Tile getTile(int row, int col) {
+    protected Tile getTile(int row, int col) {
         return grid[row][col];
+    }
+
+    /**
+     * A setter for a Tile's number.
+     * @param value of the number.
+     * @param row of the tile in the Board. 0 is the first row.
+     * @param col of the tile in the Board. 0 is the first column.
+     */
+    protected void setNum(int value, int row, int col) {
+        grid[row][col].setNum(value);
     }
 
     /**
@@ -55,6 +61,14 @@ public class Board {
         grid[randomRowB][randomColB].setNum(1);
     }
 
+    protected void clearBoard() {
+        for(int row = 0; row < SIZE; row++) {
+            for(int col = 0; col < SIZE; col++) {
+                grid[row][col] = new Tile();
+            }
+        }
+    }
+
     public void pushLeft() {
         for(int row = 0; row < SIZE; row++) {
             if(!isRowAllZero(row)) {
@@ -64,23 +78,32 @@ public class Board {
     }
 
     public void moveLeft(int row) {
-        for(int col = 0; col < SIZE; col++) {
-            Tile curr = grid[row][col];
-            if(curr.getNum() == 0) {
-                for(int next = col; next < SIZE; next++) {
-                    swap(row, next, row, next + 1);
+        for(int i = 0; i < SIZE - 1; i++) {
+            for(int col = i; col < SIZE - 1; col++) {
+                Tile curr = grid[row][col];
+                if(curr.getNum() == 0) {
+                    swap(row, col, row, col + 1);
                 }
             }
         }
     }
 
-    public void swap(int rowA, int colA, int rowB, int colB) {
+    // 1 0 0 2
+    // 1 0 0 2
+    // 1 0 2 0
+
+    private void swap(int rowA, int colA, int rowB, int colB) {
         Tile temp = grid[rowA][colA];
         grid[rowA][colA] = grid[rowB][colB];
         grid[rowB][colB] = temp;
     }
 
-    public boolean isRowAllZero(int row) {
+    /**
+     * Checks whether all the Tiles in a row  zero.
+     * @param row to be checked.
+     * @return true if all the Tiles are zero, false if not.
+     */
+    private boolean isRowAllZero(int row) {
         boolean result = true;
         for(int col = 0; col < SIZE && result; col++) {
             Tile curr = grid[row][col];
@@ -91,8 +114,12 @@ public class Board {
         return result;
     }
 
-    public void merge(Tile tileA, Tile tileB) {
+    private void merge(Tile tileA, Tile tileB) {
 
+    }
+
+    protected Tile[][] getGrid() {
+        return grid;
     }
 
     /**
