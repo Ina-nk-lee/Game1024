@@ -81,10 +81,7 @@ public class Board {
                 for(int row = 0; row < BOARD_SIZE; row++) {
                     if(isNumInRow(row)) {
                         moveLeft(row);
-                        while(hasDupInRow(row)) {
-                            mergeSides(row);
-                            moveLeft(row);
-                        }
+                        mergeLeft(row);
                     }
                 }
                 break;
@@ -92,10 +89,7 @@ public class Board {
                 for(int row = 0; row < BOARD_SIZE; row++) {
                     if(isNumInRow(row)) {
                         moveRight(row);
-                        while(hasDupInRow(row)) {
-                            mergeSides(row);
-                            moveRight(row);
-                        }
+                        mergeRight(row);
                     }
                 }
                 break;
@@ -103,10 +97,7 @@ public class Board {
                 for(int col = 0; col < BOARD_SIZE; col++) {
                     if(isNumInCol(col)) {
                         moveUp(col);
-                        while(hasDupInCol(col)) {
-                            mergeUpDown(col);
-                            moveUp(col);
-                        }
+                        mergeUp(col);
                     }
                 }
                 break;
@@ -114,10 +105,7 @@ public class Board {
                 for(int col = 0; col < BOARD_SIZE; col++) {
                     if(isNumInCol(col)) {
                         moveDown(col);
-                        while(hasDupInCol(col)) {
-                            mergeUpDown(col);
-                            moveDown(col);
-                        }
+                        mergeDown(col);
                     }
                 }
                 break;
@@ -233,28 +221,66 @@ public class Board {
     }
 
     /**
-     * Merges two same adjacent numbers in the given row.
+     * Merges two same adjacent numbers in the given row to the left.
      * @param row where numbers to be merged
      */
-    private void mergeSides(int row) {
-        for(int col = 0; col < BOARD_SIZE - 1; col++) {
-            if(grid[row][col] == grid[row][col + 1]) {
-                grid[row][col] *= 2;
-                grid[row][col + 1] = 0;
+    private void mergeLeft(int row) {
+        if(hasDupInRow(row)) {
+            for(int col = 0; col < BOARD_SIZE - 1; col++) {
+                if(grid[row][col] == grid[row][col + 1]) {
+                    grid[row][col] *= 2;
+                    grid[row][col + 1] = 0;
+                }
             }
+            moveLeft(row);
         }
     }
 
     /**
-     * Merges two same adjacent numbers in the given column.
+     * Merges two same adjacent numbers in the given row to the right.
+     * @param row where numbers to be merged
+     */
+    private void mergeRight(int row) {
+        if(hasDupInRow(row)) {
+            for(int col = BOARD_SIZE - 1; col > 0; col--) {
+                if(grid[row][col] == grid[row][col - 1]) {
+                    grid[row][col] *= 2;
+                    grid[row][col - 1] = 0;
+                }
+            }
+            moveRight(row);
+        }
+    }
+
+    /**
+     * Merges two same adjacent numbers in the given column upwards.
      * @param col where numbers to be merged
      */
-    private void mergeUpDown(int col) {
-        for(int row = 0; row < BOARD_SIZE - 1; row++) {
-            if(grid[row][col] == grid[row + 1][col]) {
-                grid[row][col] *= 2;
-                grid[row + 1][col] = 0;
+    private void mergeUp(int col) {
+        if(hasDupInCol(col)) {
+            for(int row = 0; row < BOARD_SIZE - 1; row++) {
+                if(grid[row][col] == grid[row + 1][col]) {
+                    grid[row][col] *= 2;
+                    grid[row + 1][col] = 0;
+                }
             }
+            moveUp(col);
+        }
+    }
+
+    /**
+     * Merges two same adjacent numbers in the given column downwards.
+     * @param col where numbers to be merged
+     */
+    private void mergeDown(int col) {
+        if(hasDupInCol(col)) {
+            for(int row = BOARD_SIZE - 1; row > 0; row--) {
+                if(grid[row][col] == grid[row - 1][col]) {
+                    grid[row][col] *= 2;
+                    grid[row - 1][col] = 0;
+                }
+            }
+            moveDown(col);
         }
     }
 
