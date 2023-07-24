@@ -74,11 +74,36 @@ public class Board {
     /**
      * Pushes the Board to left.
      */
-    public void pushLeft() {
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            if(!isRowAllZero(row)) {
-                moveLeft(row);
-            }
+    public void push(char dir) {
+        switch(dir) {
+            case 'L':
+                for(int row = 0; row < BOARD_SIZE; row++) {
+                    if(!isRowAllZero(row)) {
+                        moveLeft(row);
+                    }
+                }
+                break;
+            case 'R':
+                for(int row = 0; row < BOARD_SIZE; row++) {
+                    if(!isRowAllZero(row)) {
+                        moveRight(row);
+                    }
+                }
+                break;
+            case 'U':
+                for(int col = 0; col < BOARD_SIZE; col++) {
+                    if(!isColAllZero(col)) {
+                        moveUp(col);
+                    }
+                }
+                break;
+            case 'D':
+                for(int col = 0; col < BOARD_SIZE; col++) {
+                    if(!isColAllZero(col)) {
+                        moveDown(col);
+                    }
+                }
+                break;
         }
     }
 
@@ -87,13 +112,71 @@ public class Board {
      * @param row to move numbers
      */
     public void moveLeft(int row) {
+        //  Creates a new int[] row to replace the existing row in the grid.
         int[] newRow = new int[BOARD_SIZE];
-        int j = 0;
+        int index = 0;
 
         for(int col = 0; col < BOARD_SIZE; col++) {
             if(grid[row][col] != 0) {
-                newRow[j] = grid[row][col];
-                j++;
+                newRow[index] = grid[row][col];
+                index++;
+            }
+        }
+
+        grid[row] = newRow;
+    }
+
+    /**
+     * Moves all non-zero numbers in a given row to the right.
+     * @param row to move numbers
+     */
+    public void moveRight(int row) {
+        //  Creates a new int[] row to replace the existing row in the grid.
+        int[] newRow = new int[BOARD_SIZE];
+        int index = BOARD_SIZE - 1;
+
+        for(int col = BOARD_SIZE - 1; col >= 0; col--) {
+            if(grid[row][col] != 0) {
+                newRow[index] = grid[row][col];
+                index--;
+            }
+        }
+
+        grid[row] = newRow;
+    }
+
+    /**
+     * Moves all non-zero numbers in a given row to the right.
+     * @param row to move numbers
+     */
+    public void moveUp(int row) {
+        //  Creates a new int[] row to replace the existing row in the grid.
+        int[] newRow = new int[BOARD_SIZE];
+        int index = BOARD_SIZE - 1;
+
+        for(int col = BOARD_SIZE - 1; col >= 0; col--) {
+            if(grid[row][col] != 0) {
+                newRow[index] = grid[row][col];
+                index--;
+            }
+        }
+
+        grid[row] = newRow;
+    }
+
+    /**
+     * Moves all non-zero numbers in a given row to the right.
+     * @param row to move numbers
+     */
+    public void moveDown(int row) {
+        //  Creates a new int[] row to replace the existing row in the grid.
+        int[] newRow = new int[BOARD_SIZE];
+        int index = BOARD_SIZE - 1;
+
+        for(int col = BOARD_SIZE - 1; col >= 0; col--) {
+            if(grid[row][col] != 0) {
+                newRow[index] = grid[row][col];
+                index--;
             }
         }
 
@@ -108,6 +191,15 @@ public class Board {
     private boolean isRowAllZero(int row) {
         for(int i = 0; i < BOARD_SIZE; i++) {
             if(grid[row][i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isColAllZero(int col) {
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            if(grid[i][col] != 0) {
                 return false;
             }
         }
