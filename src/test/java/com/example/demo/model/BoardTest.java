@@ -43,10 +43,12 @@ public class BoardTest {
     void testGetNum() {
         testBoard.setNum(1, 0, 0);
         testBoard.setNum(2, 0, 1);
-        assertEquals("1 2 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                1 2 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -54,10 +56,12 @@ public class BoardTest {
         testBoard.setNum(1, 0, 1);
         testBoard.setNum(2, 0, 2);
         testBoard.push('L');
-        assertEquals("1 2 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                1 2 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -65,10 +69,12 @@ public class BoardTest {
         testBoard.setNum(1, 1, 1);
         testBoard.setNum(2, 1, 3);
         testBoard.push('L');
-        assertEquals("0 0 0 0 \n" +
-                "1 2 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 0 0 0\s
+                1 2 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -76,10 +82,12 @@ public class BoardTest {
         testBoard.setNum(1, 0, 1);
         testBoard.setNum(2, 0, 2);
         testBoard.push('L');
-        assertEquals("1 2 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                1 2 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -87,10 +95,12 @@ public class BoardTest {
         testBoard.setNum(1, 0, 1);
         testBoard.setNum(2, 0, 2);
         testBoard.push('R');
-        assertEquals("0 0 1 2 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 0 1 2\s
+                0 0 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -98,10 +108,12 @@ public class BoardTest {
         testBoard.setNum(1, 1, 1);
         testBoard.setNum(2, 1, 3);
         testBoard.push('R');
-        assertEquals("0 0 0 0 \n" +
-                "0 0 1 2 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 0 0 0\s
+                0 0 1 2\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -109,10 +121,12 @@ public class BoardTest {
         testBoard.setNum(1, 0, 1);
         testBoard.setNum(2, 0, 2);
         testBoard.push('R');
-        assertEquals("0 0 1 2 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 0 1 2\s
+                0 0 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -120,10 +134,12 @@ public class BoardTest {
         testBoard.setNum(1, 2, 1);
         testBoard.setNum(2, 3, 1);
         testBoard.push('U');
-        assertEquals("0 1 0 0 \n" +
-                "0 2 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 1 0 0\s
+                0 2 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -131,10 +147,12 @@ public class BoardTest {
         testBoard.setNum(1, 1, 1);
         testBoard.setNum(2, 3, 1);
         testBoard.push('U');
-        assertEquals("0 1 0 0 \n" +
-                "0 2 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 1 0 0\s
+                0 2 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -142,10 +160,12 @@ public class BoardTest {
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(2, 2, 3);
         testBoard.push('U');
-        assertEquals("0 0 0 1 \n" +
-                "0 0 0 2 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 0 0 1\s
+                0 0 0 2\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -153,10 +173,12 @@ public class BoardTest {
         testBoard.setNum(1, 2, 1);
         testBoard.setNum(2, 3, 1);
         testBoard.push('D');
-        assertEquals("0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 1 0 0 \n" +
-                "0 2 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 0 0 0\s
+                0 0 0 0\s
+                0 1 0 0\s
+                0 2 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -164,10 +186,12 @@ public class BoardTest {
         testBoard.setNum(1, 1, 1);
         testBoard.setNum(2, 3, 1);
         testBoard.push('D');
-        assertEquals("0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 1 0 0 \n" +
-                "0 2 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 0 0 0\s
+                0 0 0 0\s
+                0 1 0 0\s
+                0 2 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
@@ -175,9 +199,11 @@ public class BoardTest {
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(2, 2, 3);
         testBoard.push('D');
-        assertEquals("0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 1 \n" +
-                "0 0 0 2 \n", testBoard.toString());
+        assertEquals("""
+                0 0 0 0\s
+                0 0 0 0\s
+                0 0 0 1\s
+                0 0 0 2\s
+                """, testBoard.toString());
     }
 }
