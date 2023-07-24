@@ -101,18 +101,17 @@ public class Board {
     }
 
     /**
-     * Checks whether how many numbers in a row are zero.
+     * Checks whether the numbers in a row are all zero.
      * @param row to be checked.
-     * @return the number of zeros in the row.
+     * @return true if all the numbers are zero, false if not.
      */
     private boolean isRowAllZero(int row) {
-        boolean result = true;
         for(int i = 0; i < BOARD_SIZE; i++) {
             if(grid[row][i] != 0) {
-                result = false;
+                return false;
             }
         }
-        return result;
+        return true;
     }
 
     private void swap(int rowA, int colA, int rowB, int colB) {

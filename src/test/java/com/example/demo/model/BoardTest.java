@@ -71,11 +71,11 @@ public class BoardTest {
 
     @Test
     void testPushLeftWhenMiddleIsEmpty() {
-        testBoard.setNum(1, 0, 1);
-        testBoard.setNum(2, 0, 3);
+        testBoard.setNum(1, 1, 1);
+        testBoard.setNum(2, 1, 3);
         testBoard.pushLeft();
-        assertEquals("1 2 0 0 \n" +
-                "0 0 0 0 \n" +
+        assertEquals("0 0 0 0 \n" +
+                "1 2 0 0 \n" +
                 "0 0 0 0 \n" +
                 "0 0 0 0 \n", testBoard.toString());
     }
