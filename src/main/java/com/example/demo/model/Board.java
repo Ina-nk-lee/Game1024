@@ -103,6 +103,10 @@ public class Board {
                 for(int col = 0; col < BOARD_SIZE; col++) {
                     if(isNumInCol(col)) {
                         moveUp(col);
+                        while(hasDupInCol(col)) {
+                            mergeUpDown(col);
+                            moveUp(col);
+                        }
                     }
                 }
                 break;
@@ -110,6 +114,10 @@ public class Board {
                 for(int col = 0; col < BOARD_SIZE; col++) {
                     if(isNumInCol(col)) {
                         moveDown(col);
+                        while(hasDupInCol(col)) {
+                            mergeUpDown(col);
+                            moveDown(col);
+                        }
                     }
                 }
                 break;
@@ -229,12 +237,23 @@ public class Board {
      * @param row where numbers to be merged
      */
     private void mergeSides(int row) {
-        if(hasDupInRow(row)) {
-            for(int col = 0; col < BOARD_SIZE - 1; col++) {
-                if(grid[row][col] == grid[row][col + 1]) {
-                    grid[row][col] *= 2;
-                    grid[row][col + 1] = 0;
-                }
+        for(int col = 0; col < BOARD_SIZE - 1; col++) {
+            if(grid[row][col] == grid[row][col + 1]) {
+                grid[row][col] *= 2;
+                grid[row][col + 1] = 0;
+            }
+        }
+    }
+
+    /**
+     * Merges two same adjacent numbers in the given column.
+     * @param col where numbers to be merged
+     */
+    private void mergeUpDown(int col) {
+        for(int row = 0; row < BOARD_SIZE - 1; row++) {
+            if(grid[row][col] == grid[row + 1][col]) {
+                grid[row][col] *= 2;
+                grid[row + 1][col] = 0;
             }
         }
     }
@@ -246,7 +265,21 @@ public class Board {
      */
     private boolean hasDupInRow(int row) {
         for(int col = 0; col < BOARD_SIZE - 1; col++) {
-            if(grid[row][col] != 0 && grid[row][col]== grid[row][col + 1]) {
+            if(grid[row][col] != 0 && grid[row][col] == grid[row][col + 1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if there are same adjacent numbers in the given column.
+     * @param col to be checked
+     * @return true if there are duplicates, false if not.
+     */
+    private boolean hasDupInCol(int col) {
+        for(int row = 0; row < BOARD_SIZE - 1; row++) {
+            if(grid[row][col] != 0 && grid[row][col] == grid[row + 1][col]) {
                 return true;
             }
         }
