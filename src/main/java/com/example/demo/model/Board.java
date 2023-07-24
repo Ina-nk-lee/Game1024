@@ -212,7 +212,7 @@ public class Board {
 
     /**
      * Checks whether there is a non-zero number in the column.
-     * @param col to be checked.
+     * @param col to be checked
      * @return true if there is a non-zero number, false if not.
      */
     private boolean isNumInCol(int col) {
@@ -224,6 +224,10 @@ public class Board {
         return false;
     }
 
+    /**
+     * Merges two same adjacent numbers in the given row.
+     * @param row where numbers to be merged
+     */
     private void mergeSides(int row) {
         if(hasDupInRow(row)) {
             for(int col = 0; col < BOARD_SIZE - 1; col++) {
@@ -235,6 +239,11 @@ public class Board {
         }
     }
 
+    /**
+     * Checks if there are same adjacent numbers in the given row.
+     * @param row to be checked
+     * @return true if there are duplicates, false if not.
+     */
     private boolean hasDupInRow(int row) {
         for(int col = 0; col < BOARD_SIZE - 1; col++) {
             if(grid[row][col] != 0 && grid[row][col]== grid[row][col + 1]) {
@@ -244,6 +253,10 @@ public class Board {
         return false;
     }
 
+    /**
+     * A getter for the grid on the board.
+     * @return the grid
+     */
     protected int[][] getGrid() {
         return grid;
     }
