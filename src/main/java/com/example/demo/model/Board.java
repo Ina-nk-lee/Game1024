@@ -72,7 +72,8 @@ public class Board {
     }
 
     /**
-     * Pushes the Board to left.
+     * Pushes the board to the given direction(Left, Right, Up, Down).
+     * @param dir is the direction to push.
      */
     public void push(char dir) {
         switch(dir) {
@@ -146,41 +147,45 @@ public class Board {
     }
 
     /**
-     * Moves all non-zero numbers in a given row to the right.
-     * @param row to move numbers
+     * Moves up all non-zero numbers in a given col.
+     * @param col to move numbers
      */
-    public void moveUp(int row) {
-        //  Creates a new int[] row to replace the existing row in the grid.
-        int[] newRow = new int[BOARD_SIZE];
-        int index = BOARD_SIZE - 1;
+    public void moveUp(int col) {
+        //  Creates a new int[] to replace numbers in the given column to move them up.
+        int[] newCol = new int[BOARD_SIZE];
+        int index = 0;
 
-        for(int col = BOARD_SIZE - 1; col >= 0; col--) {
+        for(int row = 0; row < BOARD_SIZE; row++) {
             if(grid[row][col] != 0) {
-                newRow[index] = grid[row][col];
-                index--;
+                newCol[index] = grid[row][col];
+                index++;
             }
         }
 
-        grid[row] = newRow;
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            grid[row][col] = newCol[row];
+        }
     }
 
     /**
-     * Moves all non-zero numbers in a given row to the right.
-     * @param row to move numbers
+     * Moves down all non-zero numbers in a given col.
+     * @param col to move numbers
      */
-    public void moveDown(int row) {
-        //  Creates a new int[] row to replace the existing row in the grid.
-        int[] newRow = new int[BOARD_SIZE];
+    public void moveDown(int col) {
+        //  Creates a new int[] to replace numbers in the given column to move them up.
+        int[] newCol = new int[BOARD_SIZE];
         int index = BOARD_SIZE - 1;
 
-        for(int col = BOARD_SIZE - 1; col >= 0; col--) {
+        for(int row = BOARD_SIZE - 1; row >= 0; row--) {
             if(grid[row][col] != 0) {
-                newRow[index] = grid[row][col];
+                newCol[index] = grid[row][col];
                 index--;
             }
         }
 
-        grid[row] = newRow;
+        for(int row = BOARD_SIZE - 1; row >= 0; row--) {
+            grid[row][col] = newCol[row];
+        }
     }
 
     /**
