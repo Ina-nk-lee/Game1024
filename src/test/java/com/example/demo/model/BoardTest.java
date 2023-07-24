@@ -53,11 +53,12 @@ public class BoardTest {
 
     @Test
     void testPushLeftWhenLeftIsEmpty() {
-        testBoard.setNum(1, 0, 1);
+        testBoard.setNum(2, 0, 1);
         testBoard.setNum(2, 0, 2);
+        testBoard.setNum(2, 0, 3);
         testBoard.push('L');
         assertEquals("""
-                1 2 0 0\s
+                4 2 0 0\s
                 0 0 0 0\s
                 0 0 0 0\s
                 0 0 0 0\s
@@ -66,24 +67,28 @@ public class BoardTest {
 
     @Test
     void testPushLeftWhenMiddleIsEmpty() {
-        testBoard.setNum(1, 1, 1);
-        testBoard.setNum(2, 1, 3);
+        testBoard.setNum(2, 1, 0);
+        testBoard.setNum(2, 1, 1);
+        testBoard.setNum(4, 1, 3);
         testBoard.push('L');
         assertEquals("""
                 0 0 0 0\s
-                1 2 0 0\s
+                8 0 0 0\s
                 0 0 0 0\s
                 0 0 0 0\s
                 """, testBoard.toString());
     }
 
     @Test
-    void testPushLeftWhenRightIsEmpty() {
-        testBoard.setNum(1, 0, 1);
-        testBoard.setNum(2, 0, 2);
+    void testPushLeftInFullRow() {
+        testBoard.setNum(2, 0, 0);
+        testBoard.setNum(2, 0, 1);
+        testBoard.setNum(1, 0, 2);
+        testBoard.setNum(1, 0, 3);
+
         testBoard.push('L');
         assertEquals("""
-                1 2 0 0\s
+                4 2 0 0\s
                 0 0 0 0\s
                 0 0 0 0\s
                 0 0 0 0\s
@@ -92,11 +97,12 @@ public class BoardTest {
 
     @Test
     void testPushRightWhenLeftIsEmpty() {
-        testBoard.setNum(1, 0, 1);
+        testBoard.setNum(2, 0, 1);
         testBoard.setNum(2, 0, 2);
+        testBoard.setNum(2, 0, 3);
         testBoard.push('R');
         assertEquals("""
-                0 0 1 2\s
+                0 0 4 2\s
                 0 0 0 0\s
                 0 0 0 0\s
                 0 0 0 0\s
@@ -105,12 +111,13 @@ public class BoardTest {
 
     @Test
     void testPushRightWhenMiddleIsEmpty() {
-        testBoard.setNum(1, 1, 1);
-        testBoard.setNum(2, 1, 3);
+        testBoard.setNum(4, 1, 0);
+        testBoard.setNum(4, 1, 1);
+        testBoard.setNum(1, 1, 3);
         testBoard.push('R');
         assertEquals("""
                 0 0 0 0\s
-                0 0 1 2\s
+                0 0 8 1\s
                 0 0 0 0\s
                 0 0 0 0\s
                 """, testBoard.toString());
@@ -118,11 +125,12 @@ public class BoardTest {
 
     @Test
     void testPushRightWhenRightIsEmpty() {
-        testBoard.setNum(1, 0, 1);
-        testBoard.setNum(2, 0, 2);
+        testBoard.setNum(4, 0, 0);
+        testBoard.setNum(4, 0, 1);
+        testBoard.setNum(4, 0, 2);
         testBoard.push('R');
         assertEquals("""
-                0 0 1 2\s
+                0 0 8 4\s
                 0 0 0 0\s
                 0 0 0 0\s
                 0 0 0 0\s
