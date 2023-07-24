@@ -58,15 +58,6 @@ public class BoardTest {
                 "0 0 0 0 \n" +
                 "0 0 0 0 \n" +
                 "0 0 0 0 \n", testBoard.toString());
-
-        testBoard.initBoard();
-        testBoard.setNum(1, 0, 2);
-        testBoard.setNum(2, 0, 3);
-        testBoard.push('L');
-        assertEquals("1 2 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
     }
 
     @Test
@@ -100,15 +91,6 @@ public class BoardTest {
                 "0 0 0 0 \n" +
                 "0 0 0 0 \n" +
                 "0 0 0 0 \n", testBoard.toString());
-
-        testBoard.initBoard();
-        testBoard.setNum(1, 0, 2);
-        testBoard.setNum(2, 0, 3);
-        testBoard.push('R');
-        assertEquals("0 0 1 2 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
     }
 
     @Test
@@ -131,5 +113,71 @@ public class BoardTest {
                 "0 0 0 0 \n" +
                 "0 0 0 0 \n" +
                 "0 0 0 0 \n", testBoard.toString());
+    }
+
+    @Test
+    void testPushUpWhenUpIsEmpty() {
+        testBoard.setNum(1, 2, 1);
+        testBoard.setNum(2, 3, 1);
+        testBoard.push('U');
+        assertEquals("0 1 0 0 \n" +
+                "0 2 0 0 \n" +
+                "0 0 0 0 \n" +
+                "0 0 0 0 \n", testBoard.toString());
+    }
+
+    @Test
+    void testPushUpWhenMiddleIsEmpty() {
+        testBoard.setNum(1, 1, 1);
+        testBoard.setNum(2, 3, 1);
+        testBoard.push('U');
+        assertEquals("0 1 0 0 \n" +
+                "0 2 0 0 \n" +
+                "0 0 0 0 \n" +
+                "0 0 0 0 \n", testBoard.toString());
+    }
+
+    @Test
+    void testPushUpWhenDownIsEmpty() {
+        testBoard.setNum(1, 1, 3);
+        testBoard.setNum(2, 2, 3);
+        testBoard.push('U');
+        assertEquals("0 0 0 1 \n" +
+                "0 0 0 2 \n" +
+                "0 0 0 0 \n" +
+                "0 0 0 0 \n", testBoard.toString());
+    }
+
+    @Test
+    void testPushDownWhenUpIsEmpty() {
+        testBoard.setNum(1, 2, 1);
+        testBoard.setNum(2, 3, 1);
+        testBoard.push('D');
+        assertEquals("0 0 0 0 \n" +
+                "0 0 0 0 \n" +
+                "0 1 0 0 \n" +
+                "0 2 0 0 \n", testBoard.toString());
+    }
+
+    @Test
+    void testPushDownWhenMiddleIsEmpty() {
+        testBoard.setNum(1, 1, 1);
+        testBoard.setNum(2, 3, 1);
+        testBoard.push('D');
+        assertEquals("0 0 0 0 \n" +
+                "0 0 0 0 \n" +
+                "0 1 0 0 \n" +
+                "0 2 0 0 \n", testBoard.toString());
+    }
+
+    @Test
+    void testPushDownWhenDownIsEmpty() {
+        testBoard.setNum(1, 1, 3);
+        testBoard.setNum(2, 2, 3);
+        testBoard.push('D');
+        assertEquals("0 0 0 0 \n" +
+                "0 0 0 0 \n" +
+                "0 0 0 1 \n" +
+                "0 0 0 2 \n", testBoard.toString());
     }
 }
