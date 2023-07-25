@@ -10,10 +10,26 @@ public class Board {
     int BOARD_SIZE = 4;
 
     /**
-     * A Board constructor that creates a 4x4 int grid.
+     * A Board constructor that creates a 4x4 int grid with two tiles with one.
      */
     public Board() {
         grid = new int[BOARD_SIZE][BOARD_SIZE];
+    }
+
+    public void startGame() {
+        addTile();
+        addTile();
+    }
+
+    /**
+     * Initializes the Board with a zero in all tiles.
+     */
+    protected void clearBoard() {
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
+                grid[row][col] = 0;
+            }
+        }
     }
 
     /**
@@ -40,37 +56,33 @@ public class Board {
      * A method that inserts two tiles.
      * It picks two empty tiles on the board randomly and changes their numbers to 1.
      */
-    public void addTiles() {
-        Random random = new Random();
+    protected void addTile() {
+        boolean isSpace = false;
 
-        int randomRowA = random.nextInt(BOARD_SIZE);
-        int randomColA = random.nextInt(BOARD_SIZE);
-
-        while(grid[randomRowA][randomColA] != 0) {
-            randomRowA = random.nextInt(BOARD_SIZE);
-            randomColA = random.nextInt(BOARD_SIZE);
-        }
-
-        grid[randomRowA][randomColA] = 1;
-
-        int randomRowB = random.nextInt(BOARD_SIZE);
-        int randomColB = random.nextInt(BOARD_SIZE);
-
-        while(grid[randomRowB][randomColB] != 0) {
-            randomRowB = random.nextInt(BOARD_SIZE);
-            randomColB = random.nextInt(BOARD_SIZE);
-        }
-
-        grid[randomRowB][randomColB] = 1;
-    }
-
-    /**
-     * Initializes the Board with a zero in all tiles.
-     */
-    protected void initBoard() {
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
-                grid[row][col] = 0;
+                if(grid[row][col] == 0) {
+                    isSpace = true;
+                }
+            }
+        }
+
+        if(isSpace) {
+            Random random = new Random();
+
+            int randomRowA = random.nextInt(BOARD_SIZE);
+            int randomColA = random.nextInt(BOARD_SIZE);
+
+            while(grid[randomRowA][randomColA] != 0) {
+                randomRowA = random.nextInt(BOARD_SIZE);
+                randomColA = random.nextInt(BOARD_SIZE);
+            }
+
+            int variant = random.nextInt(100);
+            if(variant < 5) {
+                grid[randomRowA][randomColA] = 2;
+            } else {
+                grid[randomRowA][randomColA] = 1;
             }
         }
     }
@@ -83,35 +95,39 @@ public class Board {
         switch(dir) {
             case 'A':
                 for(int row = 0; row < BOARD_SIZE; row++) {
-                    if(isNumInRow(row)) {
+                    if(isRowMovable(row)) {
                         moveLeft(row);
                         mergeLeft(row);
                     }
                 }
+                addTile();
                 break;
             case 'D':
                 for(int row = 0; row < BOARD_SIZE; row++) {
-                    if(isNumInRow(row)) {
+                    if(isRowMovable(row)) {
                         moveRight(row);
                         mergeRight(row);
                     }
                 }
+                addTile();
                 break;
             case 'W':
                 for(int col = 0; col < BOARD_SIZE; col++) {
-                    if(isNumInCol(col)) {
+                    if(isColMovable(col)) {
                         moveUp(col);
                         mergeUp(col);
                     }
                 }
+                addTile();
                 break;
             case 'S':
                 for(int col = 0; col < BOARD_SIZE; col++) {
-                    if(isNumInCol(col)) {
+                    if(isColMovable(col)) {
                         moveDown(col);
                         mergeDown(col);
                     }
                 }
+                addTile();
                 break;
         }
     }
@@ -196,6 +212,44 @@ public class Board {
         }
     }
 
+
+    public boolean isGameOver() {
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            if(isRowMovable(i) || isColMovable(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isRowMovable(int row) {
+        if(hasDupInRow(row)) {
+            return true;
+        }
+
+        for(int col = 0; col < BOARD_SIZE; col++) {
+            if(grid[row][col] == 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isColMovable(int col) {
+        if(hasDupInCol(col)) {
+            return true;
+        }
+
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            if(grid[row][col] == 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Checks whether there is a non-zero number in the row.
      * @param row to be checked.
@@ -229,6 +283,7 @@ public class Board {
      * @param row where numbers to be merged
      */
     private void mergeLeft(int row) {
+        moveLeft(row);
         if(hasDupInRow(row)) {
             for(int col = 0; col < BOARD_SIZE - 1; col++) {
                 if(grid[row][col] == grid[row][col + 1]) {
@@ -331,7 +386,7 @@ public class Board {
         StringBuilder result = new StringBuilder();
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
-                result.append(grid[row][col]).append(" ");
+                result.append(grid[row][col]).append("\t");
             }
             result.append("\n");
         }
