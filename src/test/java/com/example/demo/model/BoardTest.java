@@ -16,15 +16,17 @@ public class BoardTest {
 
     @Test
     void testBuildBoard() {
-        assertEquals("0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n" +
-                "0 0 0 0 \n", testBoard.toString());
+        assertEquals("""
+                0 0 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                0 0 0 0\s
+                """, testBoard.toString());
     }
 
     @Test
-    void testInitGame() {
-        testBoard.initGame();
+    void testAddTiles() {
+        testBoard.addTiles();
         int[][] testGrid = testBoard.getGrid();
         int count = 0;
 
@@ -56,7 +58,7 @@ public class BoardTest {
         testBoard.setNum(2, 0, 1);
         testBoard.setNum(2, 0, 2);
         testBoard.setNum(2, 0, 3);
-        testBoard.push('L');
+        testBoard.push('A');
         assertEquals("""
                 4 2 0 0\s
                 0 0 0 0\s
@@ -68,7 +70,7 @@ public class BoardTest {
         testBoard.setNum(2, 1, 0);
         testBoard.setNum(2, 1, 1);
         testBoard.setNum(4, 1, 3);
-        testBoard.push('L');
+        testBoard.push('A');
         assertEquals("""
                 0 0 0 0\s
                 4 4 0 0\s
@@ -82,7 +84,7 @@ public class BoardTest {
         testBoard.setNum(1, 0, 2);
         testBoard.setNum(1, 0, 3);
 
-        testBoard.push('L');
+        testBoard.push('A');
         assertEquals("""
                 4 2 0 0\s
                 0 0 0 0\s
@@ -96,7 +98,7 @@ public class BoardTest {
         testBoard.setNum(2, 0, 1);
         testBoard.setNum(2, 0, 2);
         testBoard.setNum(2, 0, 3);
-        testBoard.push('R');
+        testBoard.push('D');
         assertEquals("""
                 0 0 2 4\s
                 0 0 0 0\s
@@ -108,7 +110,7 @@ public class BoardTest {
         testBoard.setNum(4, 1, 0);
         testBoard.setNum(4, 1, 1);
         testBoard.setNum(1, 1, 3);
-        testBoard.push('R');
+        testBoard.push('D');
         assertEquals("""
                 0 0 0 0\s
                 0 0 8 1\s
@@ -120,7 +122,7 @@ public class BoardTest {
         testBoard.setNum(4, 0, 0);
         testBoard.setNum(4, 0, 1);
         testBoard.setNum(4, 0, 2);
-        testBoard.push('R');
+        testBoard.push('D');
         assertEquals("""
                 0 0 4 8\s
                 0 0 0 0\s
@@ -133,7 +135,7 @@ public class BoardTest {
     void testPushUp() {
         testBoard.setNum(1, 2, 1);
         testBoard.setNum(1, 3, 1);
-        testBoard.push('U');
+        testBoard.push('W');
         assertEquals("""
                 0 2 0 0\s
                 0 0 0 0\s
@@ -145,7 +147,7 @@ public class BoardTest {
         testBoard.setNum(2, 0, 2);
         testBoard.setNum(2, 1, 2);
         testBoard.setNum(2, 3, 2);
-        testBoard.push('U');
+        testBoard.push('W');
         assertEquals("""
                 0 0 4 0\s
                 0 0 2 0\s
@@ -157,7 +159,7 @@ public class BoardTest {
         testBoard.setNum(1, 0, 3);
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(2, 2, 3);
-        testBoard.push('U');
+        testBoard.push('W');
         assertEquals("""
                 0 0 0 2\s
                 0 0 0 2\s
@@ -169,7 +171,7 @@ public class BoardTest {
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(1, 2, 3);
         testBoard.setNum(1, 3, 3);
-        testBoard.push('U');
+        testBoard.push('W');
         assertEquals("""
                 0 0 0 2\s
                 0 0 0 2\s
@@ -182,7 +184,7 @@ public class BoardTest {
     void testPushDown() {
         testBoard.setNum(1, 2, 1);
         testBoard.setNum(1, 3, 1);
-        testBoard.push('D');
+        testBoard.push('S');
         assertEquals("""
                 0 0 0 0\s
                 0 0 0 0\s
@@ -194,7 +196,7 @@ public class BoardTest {
         testBoard.setNum(2, 0, 2);
         testBoard.setNum(2, 1, 2);
         testBoard.setNum(2, 3, 2);
-        testBoard.push('D');
+        testBoard.push('S');
         assertEquals("""
                 0 0 0 0\s
                 0 0 0 0\s
@@ -206,7 +208,7 @@ public class BoardTest {
         testBoard.setNum(1, 0, 3);
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(2, 2, 3);
-        testBoard.push('D');
+        testBoard.push('S');
         assertEquals("""
                 0 0 0 0\s
                 0 0 0 0\s
@@ -219,7 +221,7 @@ public class BoardTest {
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(1, 2, 3);
         testBoard.setNum(1, 3, 3);
-        testBoard.push('D');
+        testBoard.push('S');
         assertEquals("""
                 0 0 0 0\s
                 0 0 0 0\s

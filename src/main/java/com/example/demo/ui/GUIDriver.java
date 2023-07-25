@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  * @version 2023-07-22
  */
 
-public class Driver extends Application {
+public class GUIDriver extends Application {
 
     /**
      * Main method that launches the game application.
