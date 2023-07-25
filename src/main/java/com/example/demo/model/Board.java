@@ -4,7 +4,6 @@ import java.util.Random;
 
 /**
  * This class represents the main board of the 1024 Game.
- *
  */
 public class Board {
     int[][] grid;
@@ -21,7 +20,7 @@ public class Board {
      * A getter for number on the Board.
      * @param row of the int in the Board. 0 is the first row.
      * @param col of the int in the Board. 0 is the first column.
-     * @return a int with the given row and column.
+     * @return a number in the given row and column.
      */
     protected int getNum(int row, int col) {
         return grid[row][col];
@@ -38,21 +37,26 @@ public class Board {
     }
 
     /**
-     * A method that initializes a game.
-     * It picks two ints on the board randomly and changes their numbers to 1.
+     * A method that inserts two tiles.
+     * It picks two empty tiles on the board randomly and changes their numbers to 1.
      */
-    public void initGame() {
+    public void addTiles() {
         Random random = new Random();
 
         int randomRowA = random.nextInt(BOARD_SIZE);
         int randomColA = random.nextInt(BOARD_SIZE);
+
+        while(grid[randomRowA][randomColA] != 0) {
+            randomRowA = random.nextInt(BOARD_SIZE);
+            randomColA = random.nextInt(BOARD_SIZE);
+        }
 
         grid[randomRowA][randomColA] = 1;
 
         int randomRowB = random.nextInt(BOARD_SIZE);
         int randomColB = random.nextInt(BOARD_SIZE);
 
-        while(randomRowA == randomRowB && randomColA == randomColB) {
+        while(grid[randomRowB][randomColB] != 0) {
             randomRowB = random.nextInt(BOARD_SIZE);
             randomColB = random.nextInt(BOARD_SIZE);
         }
@@ -77,7 +81,7 @@ public class Board {
      */
     public void push(char dir) {
         switch(dir) {
-            case 'L':
+            case 'A':
                 for(int row = 0; row < BOARD_SIZE; row++) {
                     if(isNumInRow(row)) {
                         moveLeft(row);
@@ -85,7 +89,7 @@ public class Board {
                     }
                 }
                 break;
-            case 'R':
+            case 'D':
                 for(int row = 0; row < BOARD_SIZE; row++) {
                     if(isNumInRow(row)) {
                         moveRight(row);
@@ -93,7 +97,7 @@ public class Board {
                     }
                 }
                 break;
-            case 'U':
+            case 'W':
                 for(int col = 0; col < BOARD_SIZE; col++) {
                     if(isNumInCol(col)) {
                         moveUp(col);
@@ -101,7 +105,7 @@ public class Board {
                     }
                 }
                 break;
-            case 'D':
+            case 'S':
                 for(int col = 0; col < BOARD_SIZE; col++) {
                     if(isNumInCol(col)) {
                         moveDown(col);
@@ -331,6 +335,7 @@ public class Board {
             }
             result.append("\n");
         }
+        result.setLength(result.length() - 1);
         return result.toString();
     }
 }
