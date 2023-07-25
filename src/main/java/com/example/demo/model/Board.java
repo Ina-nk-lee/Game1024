@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * This class represents the main board of the 1024 Game.
@@ -17,8 +18,25 @@ public class Board {
     }
 
     public void startGame() {
+        Scanner scan = new Scanner(System.in);
+        char command;
+
         addTile();
         addTile();
+
+        while(!isGameOver()) {
+            System.out.println(this);
+            try {
+                command = scan.nextLine().toUpperCase().charAt(0);
+                if(command == 'Q') {
+                    break;
+                } else {
+                    push(command);
+                }
+            } catch(StringIndexOutOfBoundsException e) {
+                System.out.println("Enter: A (Left) / W (Up) / S(Down) / D(Right).");
+            }
+        }
     }
 
     /**
@@ -30,16 +48,6 @@ public class Board {
                 grid[row][col] = 0;
             }
         }
-    }
-
-    /**
-     * A getter for number on the Board.
-     * @param row of the int in the Board. 0 is the first row.
-     * @param col of the int in the Board. 0 is the first column.
-     * @return a number in the given row and column.
-     */
-    protected int getNum(int row, int col) {
-        return grid[row][col];
     }
 
     /**
@@ -108,6 +116,8 @@ public class Board {
                 }
                 addTile();
                 break;
+            default:
+                System.out.println("Enter: A (Left) / W (Up) / S(Down) / D(Right).");
         }
     }
 
@@ -203,7 +213,11 @@ public class Board {
         }
     }
 
-
+    /**
+     * Checks if the game is over.
+     * Game over if there is no number to merge and there is no space to add a tile.
+     * @return true if the game is over, false if not.
+     */
     public boolean isGameOver() {
         for(int i = 0; i < BOARD_SIZE; i++) {
             if(hasDupInRow(i) || hasSpaceInRow(i)|| hasDupInCol(i) || hasSpaceInCol(i)) {
@@ -213,15 +227,24 @@ public class Board {
         return true;
     }
 
+    /**
+     * Checks if there is an empty tile on the Board.
+     * @return true if there is an empty tile, false if not
+     */
     private boolean hasSpaceInBoard() {
         for(int i = 0; i < BOARD_SIZE; i++) {
-            if(hasDupInRow(i)) {
+            if(hasSpaceInRow(i)) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Checks if there is an empty tile on the row.
+     * @param row to be checked
+     * @return true if there is an empty tile on the row, false if not
+     */
     private boolean hasSpaceInRow(int row) {
         for(int col = 0; col < BOARD_SIZE; col++) {
             if(grid[row][col] == 0) {
@@ -231,6 +254,11 @@ public class Board {
         return false;
     }
 
+    /**
+     * Checks if there is an empty tile on the column.
+     * @param col to be checked
+     * @return true if there is an empty tile on the column, false if not
+     */
     private boolean hasSpaceInCol(int col) {
         for(int row = 0; row < BOARD_SIZE; row++) {
             if(grid[row][col] == 0) {
@@ -309,7 +337,7 @@ public class Board {
     }
 
     /**
-     * Checks if there are same adjacent numbers in the given row.
+     * Checks if there are adjacent duplicate numbers in the given row.
      * @param row to be checked
      * @return true if there are duplicates, false if not.
      */
@@ -323,7 +351,7 @@ public class Board {
     }
 
     /**
-     * Checks if there are same adjacent numbers in the given column.
+     * Checks if there are same adjacent duplicate numbers in the given column.
      * @param col to be checked
      * @return true if there are duplicates, false if not.
      */
@@ -337,7 +365,7 @@ public class Board {
     }
 
     /**
-     * A getter for the grid on the board.
+     * A getter for the grid of the board.
      * @return the grid
      */
     protected int[][] getGrid() {
