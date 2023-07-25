@@ -8,6 +8,7 @@ public class CUIDriver {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         Board board = new Board();
+        board.startGame();
         boolean keepPlaying = true;
 
         while(keepPlaying) {
