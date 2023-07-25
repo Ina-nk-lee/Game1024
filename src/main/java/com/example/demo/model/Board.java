@@ -22,7 +22,7 @@ public class Board {
     }
 
     /**
-     * Initializes the Board with a zero in all tiles.
+     * Clears the Board with a zero in all tiles.
      */
     protected void clearBoard() {
         for(int row = 0; row < BOARD_SIZE; row++) {
@@ -53,21 +53,12 @@ public class Board {
     }
 
     /**
-     * A method that inserts two tiles.
-     * It picks two empty tiles on the board randomly and changes their numbers to 1.
+     * A method that inserts a tile.
+     * It picks an empty tile on the board randomly and changes its number to 1.
+     * Does nothing if the board is full.
      */
     protected void addTile() {
-        boolean isSpace = false;
-
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            for(int col = 0; col < BOARD_SIZE; col++) {
-                if(grid[row][col] == 0) {
-                    isSpace = true;
-                }
-            }
-        }
-
-        if(isSpace) {
+        if(hasSpaceInBoard()) {
             Random random = new Random();
 
             int randomRowA = random.nextInt(BOARD_SIZE);
@@ -89,43 +80,31 @@ public class Board {
 
     /**
      * Pushes the board to the given direction (Left, Right, Up, Down).
-     * @param dir is the direction to push
+     * @param dir is the direction to push (Left - A, Right - S, Up - W, Down - D)
      */
     public void push(char dir) {
         switch(dir) {
             case 'A':
                 for(int row = 0; row < BOARD_SIZE; row++) {
-                    if(isRowMovable(row)) {
-                        moveLeft(row);
-                        mergeLeft(row);
-                    }
+                    pushLeft(row);
                 }
                 addTile();
                 break;
             case 'D':
                 for(int row = 0; row < BOARD_SIZE; row++) {
-                    if(isRowMovable(row)) {
-                        moveRight(row);
-                        mergeRight(row);
-                    }
+                    pushRight(row);
                 }
                 addTile();
                 break;
             case 'W':
                 for(int col = 0; col < BOARD_SIZE; col++) {
-                    if(isColMovable(col)) {
-                        moveUp(col);
-                        mergeUp(col);
-                    }
+                    pushUp(col);
                 }
                 addTile();
                 break;
             case 'S':
                 for(int col = 0; col < BOARD_SIZE; col++) {
-                    if(isColMovable(col)) {
-                        moveDown(col);
-                        mergeDown(col);
-                    }
+                    pushDown(col);
                 }
                 addTile();
                 break;
@@ -134,155 +113,138 @@ public class Board {
 
     /**
      * Moves all non-zero numbers in a given row to the left.
+     * Does nothing if there is no space to go.
      * @param row to be rearranged
      */
     public void moveLeft(int row) {
-        //  Creates a new int[] row to replace the existing row in the grid.
-        int[] newRow = new int[BOARD_SIZE];
-        int index = 0;
+        if(hasSpaceInRow(row)) {
+            //  Creates a new int[] row to replace the existing row in the grid.
+            int[] newRow = new int[BOARD_SIZE];
+            int index = 0;
 
-        for(int col = 0; col < BOARD_SIZE; col++) {
-            if(grid[row][col] != 0) {
-                newRow[index] = grid[row][col];
-                index++;
+            for(int col = 0; col < BOARD_SIZE; col++) {
+                if(grid[row][col] != 0) {
+                    newRow[index] = grid[row][col];
+                    index++;
+                }
             }
-        }
 
-        grid[row] = newRow;
+            grid[row] = newRow;
+        }
     }
 
     /**
      * Moves all non-zero numbers in a given row to the right.
+     * Does nothing if there is no space to go.
      * @param row to be rearranged
      */
     public void moveRight(int row) {
-        //  Creates a new int[] row to replace the existing row in the grid.
-        int[] newRow = new int[BOARD_SIZE];
-        int index = BOARD_SIZE - 1;
+        if(hasSpaceInRow(row)) {
+            //  Creates a new int[] row to replace the existing row in the grid.
+            int[] newRow = new int[BOARD_SIZE];
+            int index = BOARD_SIZE - 1;
 
-        for(int col = BOARD_SIZE - 1; col >= 0; col--) {
-            if(grid[row][col] != 0) {
-                newRow[index] = grid[row][col];
-                index--;
+            for(int col = BOARD_SIZE - 1; col >= 0; col--) {
+                if(grid[row][col] != 0) {
+                    newRow[index] = grid[row][col];
+                    index--;
+                }
             }
-        }
 
-        grid[row] = newRow;
+            grid[row] = newRow;
+        }
     }
 
     /**
      * Moves up all non-zero numbers in a given column.
+     * Does nothing if there is no space to go.
      * @param col to be rearranged
      */
     public void moveUp(int col) {
-        //  Creates a new int[] to replace numbers in the given column to move them up.
-        int[] newCol = new int[BOARD_SIZE];
-        int index = 0;
+        if(hasSpaceInCol(col)) {
+            //  Creates a new int[] to replace numbers in the given column to move them up.
+            int[] newCol = new int[BOARD_SIZE];
+            int index = 0;
 
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            if(grid[row][col] != 0) {
-                newCol[index] = grid[row][col];
-                index++;
+            for(int row = 0; row < BOARD_SIZE; row++) {
+                if(grid[row][col] != 0) {
+                    newCol[index] = grid[row][col];
+                    index++;
+                }
             }
-        }
 
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            grid[row][col] = newCol[row];
+            for(int row = 0; row < BOARD_SIZE; row++) {
+                grid[row][col] = newCol[row];
+            }
         }
     }
 
     /**
      * Moves down all non-zero numbers in a given column.
+     * Does nothing if there is no space to go.
      * @param col to be rearranged
      */
     public void moveDown(int col) {
-        //  Creates a new int[] to replace numbers in the given column to move them up.
-        int[] newCol = new int[BOARD_SIZE];
-        int index = BOARD_SIZE - 1;
+        if(hasSpaceInCol(col)) {
+            //  Creates a new int[] to replace numbers in the given column to move them up.
+            int[] newCol = new int[BOARD_SIZE];
+            int index = BOARD_SIZE - 1;
 
-        for(int row = BOARD_SIZE - 1; row >= 0; row--) {
-            if(grid[row][col] != 0) {
-                newCol[index] = grid[row][col];
-                index--;
+            for(int row = BOARD_SIZE - 1; row >= 0; row--) {
+                if(grid[row][col] != 0) {
+                    newCol[index] = grid[row][col];
+                    index--;
+                }
             }
-        }
 
-        for(int row = BOARD_SIZE - 1; row >= 0; row--) {
-            grid[row][col] = newCol[row];
+            for(int row = BOARD_SIZE - 1; row >= 0; row--) {
+                grid[row][col] = newCol[row];
+            }
         }
     }
 
 
     public boolean isGameOver() {
         for(int i = 0; i < BOARD_SIZE; i++) {
-            if(isRowMovable(i) || isColMovable(i)) {
+            if(hasDupInRow(i) || hasSpaceInRow(i)|| hasDupInCol(i) || hasSpaceInCol(i)) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean isRowMovable(int row) {
-        if(hasDupInRow(row)) {
-            return true;
+    private boolean hasSpaceInBoard() {
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            if(hasDupInRow(i)) {
+                return true;
+            }
         }
+        return false;
+    }
 
+    private boolean hasSpaceInRow(int row) {
         for(int col = 0; col < BOARD_SIZE; col++) {
             if(grid[row][col] == 0) {
                 return true;
             }
         }
-
         return false;
     }
 
-    private boolean isColMovable(int col) {
-        if(hasDupInCol(col)) {
-            return true;
-        }
-
+    private boolean hasSpaceInCol(int col) {
         for(int row = 0; row < BOARD_SIZE; row++) {
             if(grid[row][col] == 0) {
                 return true;
             }
         }
-
         return false;
     }
 
     /**
-     * Checks whether there is a non-zero number in the row.
-     * @param row to be checked.
-     * @return true if there is a non-zero number, false if not.
-     */
-    private boolean isNumInRow(int row) {
-        for(int i = 0; i < BOARD_SIZE; i++) {
-            if(grid[row][i] != 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks whether there is a non-zero number in the column.
-     * @param col to be checked
-     * @return true if there is a non-zero number, false if not.
-     */
-    private boolean isNumInCol(int col) {
-        for(int i = 0; i < BOARD_SIZE; i++) {
-            if(grid[i][col] != 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Merges two same adjacent numbers in the given row to the left.
+     * Fills gaps and merges two same adjacent numbers in the given row to the left.
      * @param row where numbers to be merged
      */
-    private void mergeLeft(int row) {
+    private void pushLeft(int row) {
         moveLeft(row);
         if(hasDupInRow(row)) {
             for(int col = 0; col < BOARD_SIZE - 1; col++) {
@@ -296,10 +258,11 @@ public class Board {
     }
 
     /**
-     * Merges two same adjacent numbers in the given row to the right.
+     * Fills gaps and merges two same adjacent numbers in the given row to the right.
      * @param row where numbers to be merged
      */
-    private void mergeRight(int row) {
+    private void pushRight(int row) {
+        moveRight(row);
         if(hasDupInRow(row)) {
             for(int col = BOARD_SIZE - 1; col > 0; col--) {
                 if(grid[row][col] == grid[row][col - 1]) {
@@ -312,10 +275,11 @@ public class Board {
     }
 
     /**
-     * Merges two same adjacent numbers in the given column upwards.
+     * Fills gaps and merges two same adjacent numbers in the given column upwards.
      * @param col where numbers to be merged
      */
-    private void mergeUp(int col) {
+    private void pushUp(int col) {
+        moveUp(col);
         if(hasDupInCol(col)) {
             for(int row = 0; row < BOARD_SIZE - 1; row++) {
                 if(grid[row][col] == grid[row + 1][col]) {
@@ -328,10 +292,11 @@ public class Board {
     }
 
     /**
-     * Merges two same adjacent numbers in the given column downwards.
+     * Fills gaps and merges two same adjacent numbers in the given column downwards.
      * @param col where numbers to be merged
      */
-    private void mergeDown(int col) {
+    private void pushDown(int col) {
+        moveDown(col);
         if(hasDupInCol(col)) {
             for(int row = BOARD_SIZE - 1; row > 0; row--) {
                 if(grid[row][col] == grid[row - 1][col]) {
