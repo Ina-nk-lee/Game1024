@@ -25,8 +25,8 @@ public class BoardTest {
     }
 
     @Test
-    void testAddTiles() {
-        testBoard.addTiles();
+    void testAddTile() {
+        testBoard.addTile();
         int[][] testGrid = testBoard.getGrid();
         int count = 0;
 
@@ -38,7 +38,7 @@ public class BoardTest {
             }
         }
 
-        assertEquals(2, count);
+        assertEquals(1, count);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class BoardTest {
                 0 0 0 0\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(2, 1, 0);
         testBoard.setNum(2, 1, 1);
         testBoard.setNum(4, 1, 3);
@@ -78,7 +78,7 @@ public class BoardTest {
                 0 0 0 0\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(2, 0, 0);
         testBoard.setNum(2, 0, 1);
         testBoard.setNum(1, 0, 2);
@@ -106,7 +106,7 @@ public class BoardTest {
                 0 0 0 0\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(4, 1, 0);
         testBoard.setNum(4, 1, 1);
         testBoard.setNum(1, 1, 3);
@@ -118,7 +118,7 @@ public class BoardTest {
                 0 0 0 0\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(4, 0, 0);
         testBoard.setNum(4, 0, 1);
         testBoard.setNum(4, 0, 2);
@@ -143,7 +143,7 @@ public class BoardTest {
                 0 0 0 0\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(2, 0, 2);
         testBoard.setNum(2, 1, 2);
         testBoard.setNum(2, 3, 2);
@@ -155,7 +155,7 @@ public class BoardTest {
                 0 0 0 0\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(1, 0, 3);
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(2, 2, 3);
@@ -192,7 +192,7 @@ public class BoardTest {
                 0 2 0 0\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(2, 0, 2);
         testBoard.setNum(2, 1, 2);
         testBoard.setNum(2, 3, 2);
@@ -204,7 +204,7 @@ public class BoardTest {
                 0 0 4 0\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(1, 0, 3);
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(2, 2, 3);
@@ -216,7 +216,7 @@ public class BoardTest {
                 0 0 0 2\s
                 """, testBoard.toString());
 
-        testBoard.initBoard();
+        testBoard.clearBoard();
         testBoard.setNum(1, 0, 3);
         testBoard.setNum(1, 1, 3);
         testBoard.setNum(1, 2, 3);
