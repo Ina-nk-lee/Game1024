@@ -12,8 +12,8 @@ import java.util.Scanner;
  * The game is over when there is no space to add a tile and there is no available tile to be merged.
  */
 public class Board {
-    int[][] grid;
-    int BOARD_SIZE = 4;
+    private int[][] grid;
+    private static final int BOARD_SIZE = 4;
 
     /**
      * A Board constructor that creates a 4x4 int grid with two tiles with one.
