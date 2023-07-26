@@ -7,7 +7,7 @@ import java.util.Scanner;
  * This class represents the main board of a 1024 Game.
  * A user should merge same numbers to get to the 1024 tile.
  * The Board can be pushed into four directions, left, right, up and down,
- * by entering A (left), D (right), W (Up), and D (Down).
+ * by entering A (left), D (right), W (Up), and S (Down).
  * A 1 tile or a 2 tile is automatically added with every move.
  * The game is over when there is no space to add a tile and there is no available tile to be merged.
  */
@@ -88,7 +88,7 @@ public class Board {
 
     /**
      * Pushes the board to the given direction (Left, Right, Up, Down).
-     * @param dir is the direction to push (Left - A, Right - S, Up - W, Down - D)
+     * @param dir is the direction to push (Left - A, Right - S, Up - W, Down - S)
      */
     public void push(char dir) {
         switch(dir) {
@@ -117,7 +117,7 @@ public class Board {
                 addTile();
                 break;
             default:
-                System.out.println("Enter: A (Left) / W (Up) / S(Down) / D(Right).");
+                System.out.println("Enter: Left - A / Right - S / Up - W / Down - S.");
         }
     }
 
