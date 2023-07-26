@@ -17,6 +17,11 @@ public class Board {
         grid = new int[BOARD_SIZE][BOARD_SIZE];
     }
 
+    /**
+     * Starts a 1024 Game.
+     * It adds two tiles to the Board in the beginning and keep receiving user input to push the Board
+     * in four directions until the game is over or the user quits the game by entering 'Q'.
+     */
     public void startGame() {
         Scanner scan = new Scanner(System.in);
         char command;
@@ -48,16 +53,6 @@ public class Board {
                 grid[row][col] = 0;
             }
         }
-    }
-
-    /**
-     * A setter for a number on the Board.
-     * @param value of the number.
-     * @param row of the int in the Board. 0 is the first row.
-     * @param col of the int in the Board. 0 is the first column.
-     */
-    protected void setNum(int value, int row, int col) {
-        grid[row][col] = value;
     }
 
     /**
@@ -214,61 +209,6 @@ public class Board {
     }
 
     /**
-     * Checks if the game is over.
-     * Game over if there is no number to merge and there is no space to add a tile.
-     * @return true if the game is over, false if not.
-     */
-    public boolean isGameOver() {
-        for(int i = 0; i < BOARD_SIZE; i++) {
-            if(hasDupInRow(i) || hasSpaceInRow(i)|| hasDupInCol(i) || hasSpaceInCol(i)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Checks if there is an empty tile on the Board.
-     * @return true if there is an empty tile, false if not
-     */
-    private boolean hasSpaceInBoard() {
-        for(int i = 0; i < BOARD_SIZE; i++) {
-            if(hasSpaceInRow(i)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if there is an empty tile on the row.
-     * @param row to be checked
-     * @return true if there is an empty tile on the row, false if not
-     */
-    private boolean hasSpaceInRow(int row) {
-        for(int col = 0; col < BOARD_SIZE; col++) {
-            if(grid[row][col] == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if there is an empty tile on the column.
-     * @param col to be checked
-     * @return true if there is an empty tile on the column, false if not
-     */
-    private boolean hasSpaceInCol(int col) {
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            if(grid[row][col] == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Fills gaps and merges two same adjacent numbers in the given row to the left.
      * @param row where numbers to be merged
      */
@@ -337,6 +277,61 @@ public class Board {
     }
 
     /**
+     * Checks if the game is over.
+     * Game over if there is no number to merge and there is no space to add a tile.
+     * @return true if the game is over, false if not.
+     */
+    public boolean isGameOver() {
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            if(hasDupInRow(i) || hasSpaceInRow(i)|| hasDupInCol(i) || hasSpaceInCol(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks if there is an empty tile on the Board.
+     * @return true if there is an empty tile, false if not
+     */
+    private boolean hasSpaceInBoard() {
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            if(hasSpaceInRow(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if there is an empty tile on the row.
+     * @param row to be checked
+     * @return true if there is an empty tile on the row, false if not
+     */
+    private boolean hasSpaceInRow(int row) {
+        for(int col = 0; col < BOARD_SIZE; col++) {
+            if(grid[row][col] == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if there is an empty tile on the column.
+     * @param col to be checked
+     * @return true if there is an empty tile on the column, false if not
+     */
+    private boolean hasSpaceInCol(int col) {
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            if(grid[row][col] == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Checks if there are adjacent duplicate numbers in the given row.
      * @param row to be checked
      * @return true if there are duplicates, false if not.
@@ -370,6 +365,16 @@ public class Board {
      */
     protected int[][] getGrid() {
         return grid;
+    }
+
+    /**
+     * A setter for a number on the Board.
+     * @param value of the number.
+     * @param row of the int in the Board. 0 is the first row.
+     * @param col of the int in the Board. 0 is the first column.
+     */
+    protected void setNum(int value, int row, int col) {
+        grid[row][col] = value;
     }
 
     /**
