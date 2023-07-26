@@ -13,17 +13,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.Scanner;
-
 /**
  * This class builds a 4x4 game board for the 1024 game application.
  * Since it is a utility class, it doesn't include a constructor.
  */
 
 public class BoardBuilder {
-    private static Stage primaryStage;
     private static GridPane root;
-    private static Scene scene;
     private static Board board;
     private final static int BOARD_SIZE = 4;
 
@@ -33,13 +29,14 @@ public class BoardBuilder {
      * @param stage is a stage to display.
      */
     public static void buildStage(Stage stage) {
-        primaryStage = stage;
         buildBoard();
-        scene = new Scene(root, 235, 235);
+        Scene scene = new Scene(root, 235, 235);
 
-        primaryStage.setTitle("1024 Game");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        scene.setOnKeyPressed(Controller::onKeyPress);
+
+        stage.setTitle("1024 Game");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -63,50 +60,35 @@ public class BoardBuilder {
         }
 
         board = new Board();
-        addTile();
-        addTile();
+        startGame();
     }
 
     private static void startGame() {
-        Scanner scan = new Scanner(System.in);
-        char command;
-
-        addTile();
-        addTile();
-
-        while(!board.isGameOver()) {
-            // System.out.println(board);
-            try {
-                command = scan.nextLine().toUpperCase().charAt(0);
-                if(command == 'Q') {
-                    break;
-                } else {
-                    push(command);
-                }
-            } catch(StringIndexOutOfBoundsException e) {
-                System.out.println("Enter: A (Left) / W (Up) / S(Down) / D(Right).");
-            }
-        }
+        board.addTile();
+        board.addTile();
+        updateBoard();
     }
 
-    private static void addTile() {
-        board.addTile();
+    protected static void updateBoard() {
         int[][] grid = board.getGrid();
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
+                StackPane newTile = (StackPane) getTile(row, col);
+                newTile.getChildren().clear();
                 if(grid[row][col] != 0) {
-                    StackPane newTile = (StackPane) getTile(row, col);
                     String numString = Integer.toString(grid[row][col]);
                     Text num = new Text(numString);
                     num.setFont(Font.font(20));
                     newTile.getChildren().addAll(num);
                     newTile.setBackground(Background.fill(Color.OLDLACE));
+                } else {
+                    newTile.setBackground(Background.fill(Color.rgb(70, 70, 70)));
                 }
             }
         }
     }
 
-    private static void push(char dir) {
+    protected static void push(char dir) {
         board.push(dir);
     }
 
