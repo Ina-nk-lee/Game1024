@@ -62,10 +62,10 @@ public class Board {
 
     /**
      * A method that inserts a tile.
-     * It picks an empty tile on the board randomly and changes its number to 1.
+     * It picks an empty tile on the board randomly and changes the tile's number to 1 or 2.
      * Does nothing if the board is full.
      */
-    protected void addTile() {
+    public void addTile() {
         if(hasSpaceInBoard()) {
             Random random = new Random();
 
@@ -368,7 +368,7 @@ public class Board {
      * A getter for the grid of the board.
      * @return the grid
      */
-    protected int[][] getGrid() {
+    public int[][] getGrid() {
         return grid;
     }
 
