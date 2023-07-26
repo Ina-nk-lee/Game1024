@@ -4,7 +4,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * This class represents the main board of the 1024 Game.
+ * This class represents the main board of a 1024 Game.
+ * A user should merge same numbers to get to the 1024 tile.
+ * The Board can be pushed into four directions, left, right, up and down,
+ * by entering A (left), D (right), W (Up), and D (Down).
+ * A 1 tile or a 2 tile is automatically added with every move.
+ * The game is over when there is no space to add a tile and there is no available tile to be merged.
  */
 public class Board {
     int[][] grid;
