@@ -52,7 +52,7 @@ public class Board {
     /**
      * Clears the Board with a zero in all tiles.
      */
-    protected void clearBoard() {
+    public void clearBoard() {
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
                 grid[row][col] = 0;
