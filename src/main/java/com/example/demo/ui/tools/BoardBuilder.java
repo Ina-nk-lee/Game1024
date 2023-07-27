@@ -1,10 +1,13 @@
 package com.example.demo.ui.tools;
 
 import com.example.demo.model.Board;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -13,12 +16,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Optional;
+
 /**
  * This class builds a 4x4 game board for the 1024 game application.
  * Since it is a utility class, it doesn't include a constructor.
  */
 
 public class BoardBuilder {
+    private static Scene scene;
     private static GridPane root;
     private static Board board;
     private final static int BOARD_SIZE = 4;
@@ -30,7 +36,7 @@ public class BoardBuilder {
      */
     public static void buildStage(Stage stage) {
         buildBoard();
-        Scene scene = new Scene(root, 235, 235);
+        scene = new Scene(root, 235, 235);
 
         scene.setOnKeyPressed(Controller::onKeyPress);
 
@@ -86,10 +92,31 @@ public class BoardBuilder {
                 }
             }
         }
+        if(BoardBuilder.isGameOver()) {
+            BoardBuilder.processGameOver();
+        }
     }
 
     protected static void push(char dir) {
         board.push(dir);
+    }
+
+    protected static boolean isGameOver() {
+        return board.isGameOver();
+    }
+
+    protected static void processGameOver() {
+        Alert restartDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        restartDialog.setHeaderText("Game Over");
+        restartDialog.setContentText("Retry?");
+        Optional<ButtonType> newGame = restartDialog.showAndWait();
+        if(newGame.get() == ButtonType.OK) {
+            board.clearBoard();
+            updateBoard();
+            startGame();
+        } else {
+            Platform.exit();
+        }
     }
 
     private static Node getTile(int row, int col) {
