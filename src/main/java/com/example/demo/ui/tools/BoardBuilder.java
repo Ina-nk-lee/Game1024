@@ -36,6 +36,8 @@ public class BoardBuilder {
      */
     public static void buildStage(Stage stage) {
         buildBoard();
+        startGame();
+
         scene = new Scene(root, 235, 235);
 
         scene.setOnKeyPressed(Controller::onKeyPress);
@@ -46,7 +48,7 @@ public class BoardBuilder {
     }
 
     /**
-     * Builds a board consisted with 4x4 grid.
+     * Builds a board consisted with a 4x4 tile grid.
      */
     private static void buildBoard() {
         root = new GridPane();
@@ -66,15 +68,21 @@ public class BoardBuilder {
         }
 
         board = new Board();
-        startGame();
     }
 
+    /**
+     * Starts a game.
+     */
     private static void startGame() {
         board.addTile();
         board.addTile();
         updateBoard();
     }
 
+    /**
+     * Updates a GUI-based board based on a CUI-based board.
+     * Terminates a game if the game is over.
+     */
     protected static void updateBoard() {
         int[][] grid = board.getGrid();
         for(int row = 0; row < BOARD_SIZE; row++) {
@@ -97,20 +105,33 @@ public class BoardBuilder {
         }
     }
 
+    /**
+     * Processes the user input pushing the board into four directions.
+     * @param dir is a direction where the board is pushed to.
+     */
     protected static void push(char dir) {
         board.push(dir);
     }
 
+    /**
+     * Checks if a game is over.
+     * @return true if the game is over, false if not.
+     */
     protected static boolean isGameOver() {
         return board.isGameOver();
     }
 
+    /**
+     * Processes a game over.
+     * Stops the current game and asks the user for another game.
+     * Terminates the application if the user chooses to cancel.
+     */
     protected static void processGameOver() {
         Alert restartDialog = new Alert(Alert.AlertType.CONFIRMATION);
         restartDialog.setHeaderText("Game Over");
         restartDialog.setContentText("Retry?");
         Optional<ButtonType> newGame = restartDialog.showAndWait();
-        if(newGame.get() == ButtonType.OK) {
+        if(newGame.isPresent() && newGame.get() == ButtonType.OK) {
             board.clearBoard();
             updateBoard();
             startGame();
@@ -119,6 +140,12 @@ public class BoardBuilder {
         }
     }
 
+    /**
+     * A getter for a tile on the board.
+     * @param row the row where the tile is placed
+     * @param col the column where the tile is placed
+     * @return the tile at the given row and column.
+     */
     private static Node getTile(int row, int col) {
         Node result = null;
         ObservableList<Node> tiles = root.getChildren();
