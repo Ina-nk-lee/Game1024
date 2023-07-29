@@ -24,7 +24,7 @@ public class Board {
 
     /**
      * Starts a 1024 Game.
-     * It adds two tiles to the Board in the beginning and keep receiving user input to push the Board
+     * It adds two tiles to the Board in the beginning and keep receiving user input to push the Board.
      * in four directions until the game is over or the user quits the game by entering 'Q'.
      */
     public void startGame() {
@@ -88,33 +88,46 @@ public class Board {
 
     /**
      * Pushes the board to the given direction (Left, Right, Up, Down).
-     * @param dir is the direction to push (Left - A, Right - S, Up - W, Down - S)
+     * @param dir is the direction to push (Left - A, Right - S, Up - W, Down - S).
      */
     public void push(char dir) {
+        int[][] curGrid = new int[BOARD_SIZE][BOARD_SIZE];
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            curGrid[row] = grid[row].clone();
+        }
+
         switch(dir) {
             case 'A':
                 for(int row = 0; row < BOARD_SIZE; row++) {
                     pushLeft(row);
                 }
-                addTile();
+                if(isDifferent(curGrid)) {
+                    addTile();
+                }
                 break;
             case 'D':
                 for(int row = 0; row < BOARD_SIZE; row++) {
                     pushRight(row);
                 }
-                addTile();
+                if(isDifferent(curGrid)) {
+                    addTile();
+                }
                 break;
             case 'W':
                 for(int col = 0; col < BOARD_SIZE; col++) {
                     pushUp(col);
                 }
-                addTile();
+                if(isDifferent(curGrid)) {
+                    addTile();
+                }
                 break;
             case 'S':
                 for(int col = 0; col < BOARD_SIZE; col++) {
                     pushDown(col);
                 }
-                addTile();
+                if(isDifferent(curGrid)) {
+                    addTile();
+                }
                 break;
             default:
                 System.out.println("Enter: Left - A / Right - S / Up - W / Down - S.");
@@ -124,7 +137,7 @@ public class Board {
     /**
      * Moves all non-zero numbers in a given row to the left.
      * Does nothing if there is no space to go.
-     * @param row to be rearranged
+     * @param row to be rearranged.
      */
     public void moveLeft(int row) {
         if(hasSpaceInRow(row)) {
@@ -146,7 +159,7 @@ public class Board {
     /**
      * Moves all non-zero numbers in a given row to the right.
      * Does nothing if there is no space to go.
-     * @param row to be rearranged
+     * @param row to be rearranged.
      */
     public void moveRight(int row) {
         if(hasSpaceInRow(row)) {
@@ -168,7 +181,7 @@ public class Board {
     /**
      * Moves up all non-zero numbers in a given column.
      * Does nothing if there is no space to go.
-     * @param col to be rearranged
+     * @param col to be rearranged.
      */
     public void moveUp(int col) {
         if(hasSpaceInCol(col)) {
@@ -192,7 +205,7 @@ public class Board {
     /**
      * Moves down all non-zero numbers in a given column.
      * Does nothing if there is no space to go.
-     * @param col to be rearranged
+     * @param col to be rearranged.
      */
     public void moveDown(int col) {
         if(hasSpaceInCol(col)) {
@@ -215,7 +228,7 @@ public class Board {
 
     /**
      * Fills gaps and merges two same adjacent numbers in the given row to the left.
-     * @param row where numbers to be merged
+     * @param row where numbers to be merged.
      */
     private void pushLeft(int row) {
         moveLeft(row);
@@ -232,7 +245,7 @@ public class Board {
 
     /**
      * Fills gaps and merges two same adjacent numbers in the given row to the right.
-     * @param row where numbers to be merged
+     * @param row where numbers to be merged.
      */
     private void pushRight(int row) {
         moveRight(row);
@@ -249,7 +262,7 @@ public class Board {
 
     /**
      * Fills gaps and merges two same adjacent numbers in the given column upwards.
-     * @param col where numbers to be merged
+     * @param col where numbers to be merged.
      */
     private void pushUp(int col) {
         moveUp(col);
@@ -266,7 +279,7 @@ public class Board {
 
     /**
      * Fills gaps and merges two same adjacent numbers in the given column downwards.
-     * @param col where numbers to be merged
+     * @param col where numbers to be merged.
      */
     private void pushDown(int col) {
         moveDown(col);
@@ -279,6 +292,22 @@ public class Board {
             }
             moveDown(col);
         }
+    }
+
+    /**
+     * Checks if the current board is different from the given board.
+     * @param other board to be compared.
+     * @return true if the boards are different, false if not.
+     */
+    private boolean isDifferent(int[][] other) {
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
+                if(other[row][col] != grid[row][col]) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -297,7 +326,7 @@ public class Board {
 
     /**
      * Checks if there is an empty tile on the Board.
-     * @return true if there is an empty tile, false if not
+     * @return true if there is an empty tile, false if not.
      */
     private boolean hasSpaceInBoard() {
         for(int i = 0; i < BOARD_SIZE; i++) {
@@ -310,8 +339,8 @@ public class Board {
 
     /**
      * Checks if there is an empty tile on the row.
-     * @param row to be checked
-     * @return true if there is an empty tile on the row, false if not
+     * @param row to be checked.
+     * @return true if there is an empty tile on the row, false if not.
      */
     private boolean hasSpaceInRow(int row) {
         for(int col = 0; col < BOARD_SIZE; col++) {
@@ -324,8 +353,8 @@ public class Board {
 
     /**
      * Checks if there is an empty tile on the column.
-     * @param col to be checked
-     * @return true if there is an empty tile on the column, false if not
+     * @param col to be checked.
+     * @return true if there is an empty tile on the column, false if not.
      */
     private boolean hasSpaceInCol(int col) {
         for(int row = 0; row < BOARD_SIZE; row++) {
@@ -338,7 +367,7 @@ public class Board {
 
     /**
      * Checks if there are adjacent duplicate numbers in the given row.
-     * @param row to be checked
+     * @param row to be checked.
      * @return true if there are duplicates, false if not.
      */
     private boolean hasDupInRow(int row) {
@@ -352,7 +381,7 @@ public class Board {
 
     /**
      * Checks if there are same adjacent duplicate numbers in the given column.
-     * @param col to be checked
+     * @param col to be checked.
      * @return true if there are duplicates, false if not.
      */
     private boolean hasDupInCol(int col) {
@@ -366,7 +395,7 @@ public class Board {
 
     /**
      * A getter for the grid of the board.
-     * @return the grid
+     * @return the current grid.
      */
     public int[][] getGrid() {
         return grid;
@@ -375,8 +404,8 @@ public class Board {
     /**
      * A setter for a number on the Board.
      * @param value of the number.
-     * @param row of the int in the Board. 0 is the first row.
-     * @param col of the int in the Board. 0 is the first column.
+     * @param row of the Board. 0 is the first row.
+     * @param col of the Board. 0 is the first column.
      */
     protected void setNum(int value, int row, int col) {
         grid[row][col] = value;
