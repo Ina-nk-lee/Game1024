@@ -89,12 +89,14 @@ public class BoardBuilder {
             for(int col = 0; col < BOARD_SIZE; col++) {
                 StackPane newTile = (StackPane) getTile(row, col);
                 newTile.getChildren().clear();
-                if(grid[row][col] != 0) {
+                int num = grid[row][col];
+                if(num != 0) {
                     String numString = Integer.toString(grid[row][col]);
-                    Text num = new Text(numString);
-                    num.setFont(Font.font(20));
-                    newTile.getChildren().addAll(num);
-                    newTile.setBackground(Background.fill(Color.OLDLACE));
+                    Text numText = new Text(numString);
+                    numText.setFont(Font.font(20));
+                    newTile.getChildren().addAll(numText);
+                    Color color = setColor(num);
+                    newTile.setBackground(Background.fill(color));
                 } else {
                     newTile.setBackground(Background.fill(Color.rgb(70, 70, 70)));
                 }
@@ -138,6 +140,46 @@ public class BoardBuilder {
         } else {
             Platform.exit();
         }
+    }
+
+    private static Color setColor(int num) {
+        Color color = Color.WHITE;
+        switch(num) {
+            case 1:
+                color = Color.web("fcf9f2");
+                break;
+            case 2:
+                color = Color.web("f4e4cf");
+                break;
+            case 4:
+                color = Color.web("f0cdb0");
+                break;
+            case 8:
+                color = Color.web("eeb496");
+                break;
+            case 16:
+                color = Color.web("ed9a84");
+                break;
+            case 32:
+                color = Color.web("e97e79");
+                break;
+            case 64:
+                color = Color.web("e36076");
+                break;
+            case 128:
+                color = Color.web("dd598e");
+                break;
+            case 256:
+                color = Color.web("ce59a7");
+                break;
+            case 512:
+                color = Color.web("b35fc0");
+                break;
+            case 1024:
+                color = Color.web("8a69d4");
+                break;
+        }
+        return color;
     }
 
     /**
