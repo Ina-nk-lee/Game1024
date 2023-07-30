@@ -24,21 +24,19 @@ import java.util.Optional;
  */
 
 public class BoardBuilder {
-    private static Scene scene;
     private static GridPane root;
     private static Board board;
     private final static int BOARD_SIZE = 4;
 
     /**
      * This method build a stage where the 1024 game to be played.
-     *
      * @param stage is a stage to display.
      */
     public static void buildStage(Stage stage) {
         buildBoard();
         startGame();
 
-        scene = new Scene(root, 235, 235);
+        Scene scene = new Scene(root, 235, 235);
 
         scene.setOnKeyPressed(Controller::onKeyPress);
 
@@ -142,6 +140,11 @@ public class BoardBuilder {
         }
     }
 
+    /**
+     * Sets the color of a tile depending on its number.
+     * @param num that the tile has.
+     * @return the Color picked for the tile.
+     */
     private static Color setColor(int num) {
         Color color = Color.WHITE;
         switch(num) {
