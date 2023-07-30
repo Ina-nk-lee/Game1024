@@ -10,10 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Optional;
@@ -57,8 +54,7 @@ public class BoardBuilder {
 
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
-                StackPane tile = new StackPane();
-                tile.setBackground(Background.fill(Color.rgb(70, 70, 70)));
+                Tile tile = new Tile();
                 root.add(tile, col, row);
                 tile.prefWidthProperty().bind(root.widthProperty().divide(BOARD_SIZE));
                 tile.prefHeightProperty().bind(root.heightProperty().divide(BOARD_SIZE));
@@ -85,19 +81,8 @@ public class BoardBuilder {
         int[][] grid = board.getGrid();
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
-                StackPane newTile = (StackPane) getTile(row, col);
-                newTile.getChildren().clear();
-                int num = grid[row][col];
-                if(num != 0) {
-                    String numString = Integer.toString(grid[row][col]);
-                    Text numText = new Text(numString);
-                    numText.setFont(Font.font(20));
-                    newTile.getChildren().addAll(numText);
-                    Color color = setColor(num);
-                    newTile.setBackground(Background.fill(color));
-                } else {
-                    newTile.setBackground(Background.fill(Color.rgb(70, 70, 70)));
-                }
+                Tile tile = (Tile) getTile(row, col);
+                tile.updateTile(grid[row][col]);
             }
         }
         if(BoardBuilder.isGameOver()) {
