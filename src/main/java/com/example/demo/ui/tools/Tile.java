@@ -1,21 +1,27 @@
 package com.example.demo.ui.tools;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class Tile extends StackPane {
-    int num;
-    Rectangle sqr;
-    Text text;
+    private int num;
+    private Rectangle sqr;
+    private Text text;
+    private TranslateTransition slide;
 
     public Tile() {
         this.num = 0;
         this.sqr = new Rectangle(50, 50);
         updateColor();
         this.getChildren().addAll(this.sqr);
+
+        slide = new TranslateTransition(Duration.millis(200), this);
+        slide.setOnFinished(e -> {});
     }
 
     /**
