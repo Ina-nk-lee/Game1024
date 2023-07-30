@@ -125,50 +125,6 @@ public class BoardBuilder {
         }
     }
 
-    /**
-     * Sets the color of a tile depending on its number.
-     * @param num that the tile has.
-     * @return the Color picked for the tile.
-     */
-    private static Color setColor(int num) {
-        Color color = Color.WHITE;
-        switch(num) {
-            case 1:
-                color = Color.web("fcf9f2");
-                break;
-            case 2:
-                color = Color.web("f4e4cf");
-                break;
-            case 4:
-                color = Color.web("f0cdb0");
-                break;
-            case 8:
-                color = Color.web("eeb496");
-                break;
-            case 16:
-                color = Color.web("ed9a84");
-                break;
-            case 32:
-                color = Color.web("e97e79");
-                break;
-            case 64:
-                color = Color.web("e36076");
-                break;
-            case 128:
-                color = Color.web("dd598e");
-                break;
-            case 256:
-                color = Color.web("ce59a7");
-                break;
-            case 512:
-                color = Color.web("b35fc0");
-                break;
-            case 1024:
-                color = Color.web("8a69d4");
-                break;
-        }
-        return color;
-    }
 
     /**
      * A getter for a tile on the board.
