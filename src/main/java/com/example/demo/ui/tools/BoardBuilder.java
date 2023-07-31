@@ -13,7 +13,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * This class builds a 4x4 game board for the 1024 game application.
@@ -23,7 +25,9 @@ import java.util.Optional;
 public class BoardBuilder {
     private static GridPane root;
     private static Board board;
-    private final static int BOARD_SIZE = 4;
+    private static int BOARD_SIZE;
+    private static int NUM_TILE;
+    private static ArrayList<Tile> tiles;
 
     /**
      * This method build a stage where the 1024 game to be played.
@@ -31,7 +35,8 @@ public class BoardBuilder {
      */
     public static void buildStage(Stage stage) {
         buildBoard();
-        startGame();
+        test();
+//        startGame();
 
         Scene scene = new Scene(root, 235, 235);
 
@@ -40,6 +45,18 @@ public class BoardBuilder {
         stage.setTitle("1024 Game");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void test() {
+        addTile();
+        updateBoard();
+        push('A');
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
+                Tile tile = (Tile) getTile(row, col);
+                tile.slideLeft();
+            }
+        }
     }
 
     /**
@@ -52,24 +69,28 @@ public class BoardBuilder {
         root.setHgap(5);
         root.setVgap(5);
 
+        board = new Board();
+        BOARD_SIZE = board.getBoardSize();
+        NUM_TILE = BOARD_SIZE * BOARD_SIZE;
+        tiles = new ArrayList<>(NUM_TILE);
+
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
                 Tile tile = new Tile();
                 root.add(tile, col, row);
+                tiles.add(tile);
                 tile.prefWidthProperty().bind(root.widthProperty().divide(BOARD_SIZE));
                 tile.prefHeightProperty().bind(root.heightProperty().divide(BOARD_SIZE));
             }
         }
-
-        board = new Board();
     }
 
     /**
      * Starts a game.
      */
     private static void startGame() {
-        board.addTile();
-        board.addTile();
+        addTile();
+        addTile();
         updateBoard();
     }
 
@@ -90,9 +111,40 @@ public class BoardBuilder {
         }
     }
 
+    protected static void moveTiles(char dir) {
+        switch(dir) {
+            case 'A':
+
+        }
+    }
+
+    protected static void pushLeft() {
+        for(Tile i : tiles) {
+            i.slideLeft();
+        }
+    }
+
+    protected static void addTile() {
+        if(board.hasSpaceInBoard()) {
+            Random random = new Random();
+            int randomNum = 0;
+
+            while(tiles.get(randomNum).getNumber() != 0) {
+                randomNum = random.nextInt(NUM_TILE);
+            }
+
+            int variant = random.nextInt(100);
+            if(variant < 3) {
+                tiles.get(randomNum).updateTile(2);
+            } else {
+                tiles.get(randomNum).updateTile(1);
+            }
+        }
+    }
+
     /**
      * Processes the user input pushing the board into four directions.
-     * @param dir is a direction where the board is pushed to.
+     * @param dir is a direction where the board is pushed to (Left - A, Right - S, Up - W, Down - S).
      */
     protected static void push(char dir) {
         board.push(dir);
