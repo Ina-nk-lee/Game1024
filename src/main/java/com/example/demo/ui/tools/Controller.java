@@ -7,22 +7,19 @@ public class Controller {
     }
 
     public static void onKeyPress(KeyEvent e) {
+        BoardBuilder.updateBoard();
         switch(e.getCode()) {
             case LEFT:
                 BoardBuilder.push('A');
-                BoardBuilder.updateBoard();
                 break;
             case RIGHT:
                 BoardBuilder.push('D');
-                BoardBuilder.updateBoard();
                 break;
             case UP:
                 BoardBuilder.push('W');
-                BoardBuilder.updateBoard();
                 break;
             case DOWN:
                 BoardBuilder.push('S');
-                BoardBuilder.updateBoard();
                 break;
             default:
                 break;

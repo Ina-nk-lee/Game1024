@@ -412,7 +412,7 @@ public class Board {
     }
 
     public int getBoardSize() {
-        return this.BOARD_SIZE;
+        return BOARD_SIZE;
     }
 
     /**

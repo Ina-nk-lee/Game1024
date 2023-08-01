@@ -1,6 +1,7 @@
 package com.example.demo.ui.tools;
 
 import com.example.demo.model.Board;
+import com.example.demo.model.Tile;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -25,9 +26,11 @@ import java.util.Random;
 public class BoardBuilder {
     private static GridPane root;
     private static Board board;
-    private static int BOARD_SIZE;
-    private static int NUM_TILE;
+    public static int BOARD_SIZE;
+    public static int NUM_TILE;
     private static ArrayList<Tile> tiles;
+    private static TileAnimation animation;
+
 
     /**
      * This method build a stage where the 1024 game to be played.
@@ -35,8 +38,10 @@ public class BoardBuilder {
      */
     public static void buildStage(Stage stage) {
         buildBoard();
-        test();
-//        startGame();
+        animation = new TileAnimation();
+        animation.start();
+//        test();
+        startGame();
 
         Scene scene = new Scene(root, 235, 235);
 
@@ -47,17 +52,19 @@ public class BoardBuilder {
         stage.show();
     }
 
-    public static void test() {
-        addTile();
-        updateBoard();
-        push('A');
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            for(int col = 0; col < BOARD_SIZE; col++) {
-                Tile tile = (Tile) getTile(row, col);
-                tile.slideLeft();
-            }
-        }
-    }
+//    public static void test() {
+//        addTile();
+//        addTile();
+//        addTile();
+//        for(int row = 0; row < BOARD_SIZE; row++) {
+//            for(int col = 0; col < BOARD_SIZE; col++) {
+//                Tile tile = (Tile) getTile(row, col);
+//                if(tile.getNumber() != 0) {
+//                    tile.slideLeft();
+//                }
+//            }
+//        }
+//    }
 
     /**
      * Builds a board consisted with a 4x4 tile grid.
@@ -78,9 +85,16 @@ public class BoardBuilder {
             for(int col = 0; col < BOARD_SIZE; col++) {
                 Tile tile = new Tile();
                 root.add(tile, col, row);
+            }
+        }
+
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
+                Tile tile = new Tile();
+                root.add(tile, col, row);
                 tiles.add(tile);
-                tile.prefWidthProperty().bind(root.widthProperty().divide(BOARD_SIZE));
-                tile.prefHeightProperty().bind(root.heightProperty().divide(BOARD_SIZE));
+//                tile.prefWidthProperty().bind(root.widthProperty().divide(BOARD_SIZE));
+//                tile.prefHeightProperty().bind(root.heightProperty().divide(BOARD_SIZE));
             }
         }
     }
@@ -103,51 +117,85 @@ public class BoardBuilder {
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
                 Tile tile = (Tile) getTile(row, col);
-                tile.updateTile(grid[row][col]);
+                if(tile.getNumber() != grid[row][col]) {
+                    tile.updateTile(grid[row][col]);
+                }
             }
         }
+
+        for(Tile tile : tiles) {
+            tile.setTranslateX(0);
+            tile.setTranslateY(0);
+        }
+
         if(BoardBuilder.isGameOver()) {
             BoardBuilder.processGameOver();
-        }
-    }
-
-    protected static void moveTiles(char dir) {
-        switch(dir) {
-            case 'A':
-
-        }
-    }
-
-    protected static void pushLeft() {
-        for(Tile i : tiles) {
-            i.slideLeft();
         }
     }
 
     protected static void addTile() {
         if(board.hasSpaceInBoard()) {
             Random random = new Random();
-            int randomNum = 0;
+            int randomNum = random.nextInt(NUM_TILE);
 
             while(tiles.get(randomNum).getNumber() != 0) {
                 randomNum = random.nextInt(NUM_TILE);
             }
 
             int variant = random.nextInt(100);
+            Tile tile = tiles.get(randomNum);
+            int row = GridPane.getRowIndex(tile);
+            int col = GridPane.getColumnIndex(tile);
+
             if(variant < 3) {
-                tiles.get(randomNum).updateTile(2);
+                tile.updateTile(2);
             } else {
-                tiles.get(randomNum).updateTile(1);
+                tile.updateTile(1);
+            }
+
+            board.getGrid()[row][col] = tile.getNumber();
+        }
+    }
+
+    public static ArrayList<Tile> getTiles() {
+        ArrayList<Tile> nonZeroTiles = new ArrayList<>();
+        for(Tile tile : tiles) {
+            if(tile.getNumber() != 0) {
+                nonZeroTiles.add(tile);
             }
         }
+        return nonZeroTiles;
     }
 
     /**
      * Processes the user input pushing the board into four directions.
-     * @param dir is a direction where the board is pushed to (Left - A, Right - S, Up - W, Down - S).
+     * @param dir is a direction where the board is pushed to (Left - A, Right - D, Up - W, Down - S).
      */
     protected static void push(char dir) {
-        board.push(dir);
+        switch(dir) {
+            case 'A':
+                for(int row = 0; row < BOARD_SIZE; row++) {
+                    for(int col = 0; col < BOARD_SIZE; col++) {
+                        Tile tile = (Tile) getTile(row, col);
+                        if(tile.getNumber() != 0) {
+                            tile.slideLeft();
+                        }
+                    }
+                }
+                board.push(dir);
+                break;
+            case 'D':
+                for(int row = 0; row < BOARD_SIZE; row++) {
+                    for(int col = 0; col < BOARD_SIZE; col++) {
+                        Tile tile = (Tile) getTile(row, col);
+                        if(tile.getNumber() != 0) {
+                            tile.slideRight();
+                        }
+                    }
+                }
+                board.push(dir);
+                break;
+        }
     }
 
     /**
