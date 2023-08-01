@@ -3,9 +3,11 @@ package com.example.demo.ui.tools;
 import javafx.scene.input.KeyEvent;
 
 public class Controller {
-    private Controller() {
-    }
 
+    /**
+     * Processes a key press to control a 1024 game.
+     * @param e is a key press event.
+     */
     public static void onKeyPress(KeyEvent e) {
         BoardBuilder.updateBoard();
         switch(e.getCode()) {

@@ -8,6 +8,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+/**
+ * This class represents a Tile in a 1024 game.
+ */
 public class Tile extends StackPane {
     private int num;
     private Rectangle sqr;
@@ -15,6 +18,9 @@ public class Tile extends StackPane {
     public TranslateTransition slide;
     private final int WIDTH = 50;
 
+    /**
+     * Creates a Tile with a default setting, a square with a number 0.
+     */
     public Tile() {
         this.num = 0;
         this.sqr = new Rectangle(WIDTH, WIDTH);
@@ -105,6 +111,9 @@ public class Tile extends StackPane {
         }
     }
 
+    /**
+     * Moves a Tile to the left.
+     */
     public void slideLeft() {
         if(this.num != 0) {
             this.toFront();
@@ -113,6 +122,9 @@ public class Tile extends StackPane {
         }
     }
 
+    /**
+     * Moves a Tile to the right.
+     */
     public void slideRight() {
         if(this.num != 0) {
             this.toFront();

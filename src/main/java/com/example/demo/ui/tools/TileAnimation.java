@@ -5,6 +5,10 @@ import javafx.animation.AnimationTimer;
 
 import java.util.ArrayList;
 
+/**
+ * This class the interactive animation of Tiles on a 1024 game board.
+ * Since it is a utility class, it doesn't include a constructor.
+ */
 public class TileAnimation extends AnimationTimer {
     private final int SPACING = 5;
 
@@ -22,6 +26,7 @@ public class TileAnimation extends AnimationTimer {
                 cur.slide.stop();
                 cur.setTranslateX(225 - cur.getLayoutX() - cur.getLength());
             }
+
 //                cur.setTranslateX(10 - cur.getLayoutX());
 //            } else if (i > 0){
 //                Tile other = tiles.get(i - 1);

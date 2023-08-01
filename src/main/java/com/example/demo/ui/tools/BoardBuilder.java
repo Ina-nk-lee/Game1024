@@ -40,7 +40,6 @@ public class BoardBuilder {
         buildBoard();
         animation = new TileAnimation();
         animation.start();
-//        test();
         startGame();
 
         Scene scene = new Scene(root, 235, 235);
@@ -51,20 +50,6 @@ public class BoardBuilder {
         stage.setScene(scene);
         stage.show();
     }
-
-//    public static void test() {
-//        addTile();
-//        addTile();
-//        addTile();
-//        for(int row = 0; row < BOARD_SIZE; row++) {
-//            for(int col = 0; col < BOARD_SIZE; col++) {
-//                Tile tile = (Tile) getTile(row, col);
-//                if(tile.getNumber() != 0) {
-//                    tile.slideLeft();
-//                }
-//            }
-//        }
-//    }
 
     /**
      * Builds a board consisted with a 4x4 tile grid.
@@ -133,6 +118,11 @@ public class BoardBuilder {
         }
     }
 
+    /**
+     * A method that inserts a tile.
+     * It picks an empty tile on the board randomly and changes the tile's number to 1 or 2.
+     * Does nothing if the board is full.
+     */
     protected static void addTile() {
         if(board.hasSpaceInBoard()) {
             Random random = new Random();
@@ -157,6 +147,10 @@ public class BoardBuilder {
         }
     }
 
+    /**
+     * A getter for non-zero tiles.
+     * @return a non-zero Tile ArrayList.
+     */
     public static ArrayList<Tile> getTiles() {
         ArrayList<Tile> nonZeroTiles = new ArrayList<>();
         for(Tile tile : tiles) {
