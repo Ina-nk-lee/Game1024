@@ -328,7 +328,7 @@ public class Board {
      * Checks if there is an empty tile on the Board.
      * @return true if there is an empty tile, false if not.
      */
-    public boolean hasSpaceInBoard() {
+    private boolean hasSpaceInBoard() {
         for(int i = 0; i < BOARD_SIZE; i++) {
             if(hasSpaceInRow(i)) {
                 return true;
@@ -409,10 +409,6 @@ public class Board {
      */
     protected void setNum(int value, int row, int col) {
         grid[row][col] = value;
-    }
-
-    public int getBoardSize() {
-        return BOARD_SIZE;
     }
 
     /**
