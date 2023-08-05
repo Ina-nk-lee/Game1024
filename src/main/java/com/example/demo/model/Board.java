@@ -411,6 +411,10 @@ public class Board {
         grid[row][col] = value;
     }
 
+    /**
+     * A getter for the size of the Board.
+     * @return the size of the board.
+     */
     public int getBoardSize() {
         return BOARD_SIZE;
     }
